@@ -31,8 +31,8 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-86v+ko2afvw0^+%4mr#q&i19n7
 # DEBUG = True
 DEBUG = False
 
-# ALLOWED_HOSTS = ['Marketplace_DjangoApp.onrender.com']
-ALLOWED_HOSTS = ['Marketplace_DjangoApp.onrender.com', '127.0.0.1', 'localhost']
+# ALLOWED_HOSTS = ['marketplace-djangoapp.onrender.com']
+ALLOWED_HOSTS = ['marketplace-djangoapp.onrender.com', '127.0.0.1', 'localhost']
 
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
