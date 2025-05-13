@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +23,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-86v+ko2afvw0^+%4mr#q&i19n79)d9b2*zx-*&ntxl)b%hh%9i'
+# SECRET_KEY = 'django-insecure-86v+ko2afvw0^+%4mr#q&i19n79)d9b2*zx-*&ntxl)b%hh%9i'
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-86v+ko2afvw0^+%4mr#q&i19n79)d9b2*zx-*&ntxl)b%hh%9i')
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['Marketplace_DjangoApp.onrender.com']
+
 
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
@@ -43,6 +50,10 @@ INSTALLED_APPS = [
     'core',
     'item',
     'conversation',
+    
+    'whitenoise.runserver_nostatic',
+    'django.contrib.staticfiles',
+    
 ]
 
 MIDDLEWARE = [
@@ -53,6 +64,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+
 ]
 
 ROOT_URLCONF = 'puddle.urls'
