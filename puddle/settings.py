@@ -28,8 +28,8 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-86v+ko2afvw0^+%4mr#q&i19n7
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
-DEBUG = False
+DEBUG = True
+# DEBUG = False
 
 # ALLOWED_HOSTS = ['marketplace-djangoapp.onrender.com']
 ALLOWED_HOSTS = ['marketplace-djangoapp.onrender.com', '127.0.0.1', 'localhost']
