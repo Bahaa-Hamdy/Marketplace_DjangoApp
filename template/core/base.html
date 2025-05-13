@@ -5,25 +5,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
     <title>{% block title %}{% endblock %} | Puddle</title>
     <link rel="shortcut icon" href="{% static 'favicon.ico' %}">
 </head>
 <body>
-    <nav class="px-6 py-6 flex justify-between items-center border-b border-gray-200">
-        <a class="text-lg font-semibold"  href="{% url 'coreindex' %}">Puddle</a>
-        <div class="space-x-6">
-            <a href="{% url 'newitem' %}" class="text-lg font-semibold hover:text-gray-500">New Item</a>
-            <a href="{% url 'browseitems' %}" class="text-lg font-semibold hover:text-gray-500">Browse</a>
-            
-            {% if request.user.is_authenticated %}
-            <a href="{% url 'inbox' %}" class="px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Inbox</a>
-            <a href="{% url 'dashindex' %}" class="px-6 py-3 text-lg font-semibold bg-gray-500 text-white rounded-xl hover:bg-gray-700">Dashboard</a>
-            {% else %}
-            <a href="{% url 'signup' %}" class="px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Sign Up</a>
-            <a href="{% url 'login' %}" class="px-6 py-3 text-lg font-semibold bg-gray-500 text-white rounded-xl hover:bg-gray-700">Sign In</a>
-            {% endif %}
+    <nav class="px-6 py-6 flex justify-between items-center border-b border-gray-200 relative" x-data="{ open: false }">
+    <a class="text-lg font-semibold" href="{% url 'coreindex' %}">Puddle</a>
+
+    <!-- Desktop Menu -->
+    <div class="space-x-6 hidden sm:flex items-center">
+        <a href="{% url 'newitem' %}" class="text-lg font-semibold hover:text-gray-500">New Item</a>
+        <a href="{% url 'browseitems' %}" class="text-lg font-semibold hover:text-gray-500">Browse</a>
+
+        {% if request.user.is_authenticated %}
+        <a href="{% url 'inbox' %}" class="px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Inbox</a>
+        <a href="{% url 'dashindex' %}" class="px-6 py-3 text-lg font-semibold bg-gray-500 text-white rounded-xl hover:bg-gray-700">Dashboard</a>
+        {% else %}
+        <a href="{% url 'signup' %}" class="px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Sign Up</a>
+        <a href="{% url 'login' %}" class="px-6 py-3 text-lg font-semibold bg-gray-500 text-white rounded-xl hover:bg-gray-700">Sign In</a>
+        {% endif %}
+    </div>
+
+    <!-- Burger Menu for Mobile -->
+    <div class="sm:hidden relative">
+        <!-- Burger Button -->
+        <button @click="open = !open" class="text-gray-700 focus:outline-none">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+        </button>
+
+        <!-- Mobile Dropdown -->
+        <div
+        x-show="open"
+        x-transition
+        @click.outside="open = false"
+        class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 shadow-lg rounded-xl p-4 space-y-2 z-50"
+        >
+        <a href="{% url 'newitem' %}" class="block text-gray-800 hover:text-teal-500">New Item</a>
+        <a href="{% url 'browseitems' %}" class="block text-gray-800 hover:text-teal-500">Browse</a>
+
+        {% if request.user.is_authenticated %}
+        <a href="{% url 'inbox' %}" class="block text-white bg-teal-500 hover:bg-teal-700 px-4 py-2 rounded">Inbox</a>
+        <a href="{% url 'dashindex' %}" class="block text-white bg-gray-500 hover:bg-gray-700 px-4 py-2 rounded">Dashboard</a>
+        {% else %}
+        <a href="{% url 'signup' %}" class="block text-white bg-teal-500 hover:bg-teal-700 px-4 py-2 rounded">Sign Up</a>
+        <a href="{% url 'login' %}" class="block text-white bg-gray-500 hover:bg-gray-700 px-4 py-2 rounded">Sign In</a>
+        {% endif %}
         </div>
+    </div>
     </nav>
+
     <div class="px-6 py-6">
     {% block content %}
     {%  endblock %}
